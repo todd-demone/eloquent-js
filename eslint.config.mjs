@@ -4,7 +4,7 @@ import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import globals from "globals";
-import eslintConfigPrettier from "eslint-config-prettier";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
 export default defineConfig(
   eslint.configs.recommended,
@@ -24,5 +24,5 @@ export default defineConfig(
       quotes: ["error", "double"],
     },
   },
-  eslintConfigPrettier,
+  eslintPluginPrettierRecommended,
 );
