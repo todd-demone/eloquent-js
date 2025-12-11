@@ -17,14 +17,30 @@ if (!hoursInput || !minutesInput || !secondsInput || !controlButton || !resetBut
 }
 
 // 4. Attach event listeners
+hoursInput.addEventListener("blur", () => padInput(hoursInput));
+minutesInput.addEventListener("blur", () => padInput(minutesInput));
+secondsInput.addEventListener("blur", () => padInput(secondsInput));
 controlButton.addEventListener("click", handleControlClick);
 resetButton.addEventListener("click", handleResetClick);
 
 // 5. Handler functions
 
-function handleControlClick(event: MouseEvent): void {
-  event.preventDefault();
+function padInput(inputElement: HTMLInputElement): void {
+  let num = parseInt(inputElement.value, 10);
 
+  const min = parseInt(inputElement.min) || 0;
+  const max = parseInt(inputElement.max) || Infinity;
+
+  if (isNaN(num) || num < min) {
+    num = min;
+  } else if (num > max) {
+    num = max;
+  }
+
+  inputElement.value = addZero(num);
+}
+
+function handleControlClick(): void {
   // START THE TIMER
   if (!isRunning) {
     // (i) CALCULATE TOTALSECONDS (Only if starting fresh)
@@ -55,13 +71,12 @@ function handleControlClick(event: MouseEvent): void {
     // 1. Stop engine & state update
     isRunning = false;
     clearInterval(intervalId);
-    controlButton.textContent = "Start";
+    controlButton.textContent = "Resume";
   }
 }
 
-function handleResetClick(event: MouseEvent): void {
+function handleResetClick(): void {
   // 1. Stop engine & state
-  event.preventDefault();
   isRunning = false;
   clearInterval(intervalId);
   intervalId = undefined;
@@ -70,9 +85,9 @@ function handleResetClick(event: MouseEvent): void {
   // 2. Visual reset
   display.textContent = "00:00:00";
   controlButton.textContent = "Start";
-  hoursInput.value = "0";
-  minutesInput.value = "0";
-  secondsInput.value = "0";
+  hoursInput.value = "00";
+  minutesInput.value = "00";
+  secondsInput.value = "00";
 }
 
 // 6. Supporting functions
@@ -87,7 +102,6 @@ function tick() {
     clearInterval(intervalId);
     intervalId = undefined;
     totalSeconds = 0;
-    updateDisplay();
     controlButton.textContent = "Start";
   }
 }

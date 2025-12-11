@@ -9,31 +9,9 @@
   <body>
     <h1 id="message">Countdown Timer</h1>
     <form id="timeInputForm">
-      <input
-        type="number"
-        name="hours"
-        id="hoursInput"
-        value="0"
-        placeholder="00"
-        min="0"
-        max="100"
-      />
-      <input
-        type="number"
-        name="minutes"
-        id="minutesInput"
-        value="0"
-        min="0"
-        max="59"
-      />
-      <input
-        type="number"
-        name="seconds"
-        id="secondsInput"
-        value="0"
-        min="0"
-        max="59"
-      />
+      <input type="text" name="hours" id="hoursInput" value="00" placeholder="00" min="0" max="100" maxlength="3" />
+      <input type="text" name="minutes" id="minutesInput" value="00" placeholder="00" min="0" max="59" maxlength="2" />
+      <input type="text" name="seconds" id="secondsInput" value="00" placeholder="00" min="0" max="59" maxlength="2" />
     </form>
     <button id="controlButton">Start</button>
     <button id="resetButton">Reset</button>
