@@ -17,6 +17,9 @@ if (!hoursInput || !minutesInput || !secondsInput || !controlButton || !resetBut
 }
 
 // 4. Attach event listeners
+hoursInput.addEventListener("input", () => handleNumericInput(hoursInput));
+minutesInput.addEventListener("input", () => handleNumericInput(minutesInput));
+secondsInput.addEventListener("input", () => handleNumericInput(secondsInput));
 hoursInput.addEventListener("blur", () => padInput(hoursInput));
 minutesInput.addEventListener("blur", () => padInput(minutesInput));
 secondsInput.addEventListener("blur", () => padInput(secondsInput));
@@ -24,6 +27,15 @@ controlButton.addEventListener("click", handleControlClick);
 resetButton.addEventListener("click", handleResetClick);
 
 // 5. Handler functions
+
+function handleNumericInput(inputElement: HTMLInputElement): void {
+  // 1. Filter the input in real-time
+  // Keep only digits (0-9). The g flag ensures all non-digits are replaced.
+  inputElement.value = inputElement.value.replace(/[^0-9]/g, "");
+
+  // 2. You can also re-run the padding/clamping logic here on every input
+  // to provide continuous feedback, but running it on 'blur' is often cleaner.
+}
 
 function padInput(inputElement: HTMLInputElement): void {
   let num = parseInt(inputElement.value, 10);
